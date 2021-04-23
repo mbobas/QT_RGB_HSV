@@ -31,14 +31,6 @@ private slots:
     void paintEvent(QPaintEvent*);
     void mousePressEvent(QMouseEvent *event);
 
-    void on_pushButton_clicked();
-
-    void on_pushButton_2_clicked();
-
-    void on_pushButton_3_clicked();
-
-    void on_pushButton_4_clicked();
-
     void on_verticalSlider_valueChanged(int value);
 
 
@@ -51,6 +43,8 @@ private slots:
 
     void on_verticalSlider_5_valueChanged(int value);
 
+    void on_verticalSlider_6_valueChanged(int value);
+
 private:
     // ui to wskaźnik za pomocą którego mamy dostęp
     // do elementów interfejsu użytkownika
@@ -61,7 +55,7 @@ private:
 
     void clean();
     void drawPixel(int x, int y, unsigned char red = 255, unsigned char green = 255, unsigned char blue = 255);
-    void HSVtoRGB(float H, float S,float V);
+    void HSVconvRGB(int x, int y, float H, float S,float V);
 
 };
 

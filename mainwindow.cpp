@@ -142,80 +142,13 @@ void MainWindow::on_cleanButton_clicked()
     update();
 }
 
-void MainWindow::on_pushButton_clicked()
-{
-    for(int i=0; i<height/2; i++)
-    {
-        for(int j=0; j<width; j++)
-        drawPixel(j,i,255,255,255);
-    }
-
-    for(int i=height/2; i<height; i++)
-    {
-        for(int j=0; j<width; j++)
-            drawPixel(j,i,255,0,0);
-    }
-    update();
-}
-
-
-void MainWindow::on_pushButton_2_clicked()
-{
-    for(int i=0; i<height; i++)
-    {
-        for(int j=0; j<width/3; j++)
-        drawPixel(j,i,0,0,0);
-    }
-
-    for(int i=0; i<height; i++)
-    {
-        for(int j=width/3; j<(width/3)*2; j++)
-            drawPixel(j,i,255,224,56);
-    }
-     for(int i=0; i<height; i++)
-    {
-    {
-        for(int j=(width/3)*2; j<width; j++)
-            drawPixel(j,i,249,24,32);
-    }
-    }
-    update();
-}
-
-void MainWindow::on_pushButton_3_clicked()
-{
-    for(int i=0; i<height; i++)
-    {
-        for(int j=0; j<width; j++)
-        drawPixel(j,i,255,0,0);
-    }
-
-    for(int i=height/2-30; i<height/2+30; i++)
-    {
-        for(int j=0; j<width; j++)
-        drawPixel(j,i,255,255,255);
-    }
-
-    for(int i=0; i<height; i++)
-    {
-        for(int j=width/2-30; j<width/2+30; j++)
-        drawPixel(j,i,255,255,255);
-    }
-    update();
-}
-
-void MainWindow::on_pushButton_4_clicked()
-{
-
-}
-
 void MainWindow::on_verticalSlider_valueChanged(int value)
 {
         for(int x=1; x<=255; x++)
         {
             for(int y=1; y<=255; y++){
-                drawPixel(x*2,y*2,value,x,y);
-                drawPixel(x*2,y*2-1,value,x,y);
+            drawPixel(x*2,y*2,value,x,y);
+            drawPixel(x*2,y*2-1,value,x,y);
             drawPixel(x*2-1,y*2,value,x,y);
             drawPixel(x*2-1,y*2-1,value,x,y);
             drawPixel(x*2+1,y*2,value,x,y);
@@ -223,10 +156,7 @@ void MainWindow::on_verticalSlider_valueChanged(int value)
             update();
             }
         }
-
 }
-
-
 
 
 void MainWindow::on_verticalSlider_2_valueChanged(int value)
@@ -261,30 +191,49 @@ void MainWindow::on_verticalSlider_3_valueChanged(int value)
     }
 }
 
-void MainWindow::HSVtoRGB(float H, float S,float V){
-    if(H>360 || H<0 || S>100 || S<0 || V>100 || V<0){
-        qDebug()<<"The givem HSV values are not in valid range";
-        return;
-    }
+void MainWindow::HSVconvRGB(int x, int y, float H, float S,float V){
     float s = S/100;
     float v = V/100;
     float C = s*v;
-    float X = C*(1-fabs(fmod(H/60.0, 2)-1));
+
+//    float X = C*(1-fabs(fmod(H/60.0, 2)-1));
+//    float m = v-C;
+//    float r,g,b;
+//    if(H >= 0 && H < 60){
+//        r = C,g = X,b = 0;
+//    }
+//    else if(H >= 60 && H < 120){
+//        r = X,g = C,b = 0;
+//    }
+//    else if(H >= 120 && H < 180){
+//        r = 0,g = C,b = X;
+//    }
+//    else if(H >= 180 && H < 240){
+//        r = 0,g = X,b = C;
+//    }
+//    else if(H >= 240 && H < 300){
+//        r = X,g = 0,b = C;
+//    }
+//    else{
+//        r = C,g = 0,b = X;
+//    }
+    float H2 = H/60.0;
+    float X = C*(1-fabs(fmod(H2, 2)-1));
     float m = v-C;
     float r,g,b;
-    if(H >= 0 && H < 60){
+    if(H2 >= 0 && H2 < 1){
         r = C,g = X,b = 0;
     }
-    else if(H >= 60 && H < 120){
+    else if(H2 >= 1 && H2 < 2){
         r = X,g = C,b = 0;
     }
-    else if(H >= 120 && H < 180){
+    else if(H2 >= 2 && H2 < 3){
         r = 0,g = C,b = X;
     }
-    else if(H >= 180 && H < 240){
+    else if(H2 >= 3 && H2 < 4){
         r = 0,g = X,b = C;
     }
-    else if(H >= 240 && H < 300){
+    else if(H2 >= 4 && H2 < 5){
         r = X,g = 0,b = C;
     }
     else{
@@ -295,7 +244,15 @@ void MainWindow::HSVtoRGB(float H, float S,float V){
     int G = (g+m)*255;
     int B = (b+m)*255;
 
-    drawPixel(V,S,R,G,B);
+
+    drawPixel(x*2,y*2,R,G,B);
+    drawPixel(x*2,y*2-1,R,G,B);
+
+    drawPixel(x*2-1,y*2,R,G,B);
+    drawPixel(x*2-1,y*2-1,R,G,B);
+
+    drawPixel(x*2+1,y*2,R,G,B);
+    drawPixel(x*2+1,y*2-1,R,G,B);
     update();
 }
 
@@ -303,8 +260,7 @@ void MainWindow::on_verticalSlider_4_valueChanged(int hue)
 {
     for(int x=0; x<=100; x++){
         for (int y=0; y<=100; y++ ){
-            HSVtoRGB(hue, y, x);
-
+            HSVconvRGB(x, y, hue, y, x);
         }
     }
 }
@@ -313,8 +269,16 @@ void MainWindow::on_verticalSlider_5_valueChanged(int sat)
 {
     for(int x=0; x<=360; x++){
         for (int y=0; y<=100; y++ ){
-            HSVtoRGB(x, sat, y);
+            HSVconvRGB(x, y, x, sat, y);
+        }
+    }
+}
 
+void MainWindow::on_verticalSlider_6_valueChanged(int value)
+{
+    for(int x=0; x<=360; x++){
+        for (int y=0; y<=100; y++ ){
+            HSVconvRGB(x, y, x, y, value);
         }
     }
 }
