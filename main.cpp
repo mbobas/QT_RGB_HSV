@@ -1,5 +1,6 @@
 #include "mainwindow.h"
 #include <QApplication>
+#include <math.h>
 
 // Standardowa postać funkcji main() dla aplikacji Qt
 // zwykle nie ma potrzeby dokonywania żadnych zmian
